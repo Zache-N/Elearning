@@ -60,8 +60,8 @@ public class Fraction{
 	}
 
 	public static void main(String[] args) {
-		Fraction f1 = new Fraction(44, 0);
-		Fraction f2 = new Fraction(2, 2);
+		Fraction f1 = new Fraction(9, 4);
+		Fraction f2 = new Fraction(8, 9);
 		
 		int[] tab = f1.addition(f2);
 		System.out.println(tab[0] + "  " + tab[1]);
