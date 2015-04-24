@@ -66,7 +66,7 @@
 					placeholder="numerateur"> <input type="number"
 					class="form-control" name="resu2" id="res2"
 					placeholder="denominateur"> <input type="submit"
-					class="btn btn-success value="Valider">
+					class="btn btn-success" value="Valider">
 			</form>
 		</div>
 

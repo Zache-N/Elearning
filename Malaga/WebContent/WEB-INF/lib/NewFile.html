@@ -1,0 +1,129 @@
+<html>
+
+<head>
+	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+</head>
+
+<script language="javascript" type="text/javascript">
+
+var JC , JCV , textea , nb2 , nb1 , nb , limite , i , j , x , caract , sup1 , sup2 , choice_affich;
+
+function init(){document.getElementById("defaut_affich").checked = true;}
+
+function choice_affiche(value){choice_affich = value;}
+
+function affich(a)// je met cette fonction ainsi pour ceux qui désire modifier le mode d'affichage....
+{
+	document.getElementById("texte_2").innerHTML = a;
+}
+
+function choixcaract(form)
+{
+	if(choice_affich == 2)
+	{
+		caract = "*";
+		sup1 = "^";
+		sup2 = "";
+	}
+	else
+	{
+		if(choice_affich == 1){caract = " . ";}
+		else{caract = " × ";}
+		sup1 = "<sup>";
+		sup2 = "</sup>";
+	}
+}
+
+function JCVD(x)//...Security
+{
+	JC = parseInt(x);
+	JCV = JC.toString();
+	if(JCV.length == x.length && JCV != "NaN"){return Math.abs(JC);}
+	else{return 0;}
+}
+
+function process(form)
+{
+	nb = JCVD(form.fact.value);
+
+    textea = "===> " + nb + " = ";
+
+	if(nb <= 2)
+	{
+		if(nb != 2){textea += "Ni premier ni composé.";}
+		else{textea += "Nombre premier.";}
+	}
+	else
+	{
+		choixcaract(form);
+		nb1 = nb;
+        j = 0;
+        i = 2;
+        x = 0;
+        limite = Math.sqrt(nb1) + 1;
+
+        while(1)
+		{
+			if(i>limite)
+            {
+				if(nb == nb1){textea += "Nombre premier.";}
+                else
+                {
+					if(nb1 > 1){textea += caract + nb1;}
+                }
+                break;
+            }
+
+			nb2=nb1/i;
+
+            if(nb2 - Math.floor(nb2) > 0.0000000000001)
+            {
+				if(j > 0)
+                {
+					if(x != 0){textea += caract;}
+					else{x = 1;}
+                    if(j == 1){textea += i;}
+                    else{textea += i + sup1 + j + sup2;}
+                    j=0;
+                }
+
+                i++;
+            }
+            else
+            {
+				j++;
+                nb1=nb2;
+            }
+		}
+	}
+}
+
+</script>
+
+<body onLoad="init();" lang="fr-FR">
+
+<h1 >Décomposition en facteurs premiers</h1>
+
+<p align="center">Lors de la saisie d'un grand chiffre, une fenêtre "Attention: le script ne répond pas" peut s'afficher.
+<br />Si c'est le cas, cliquez sur "Continuer" autant de fois que cette fenêtre se réactualisera.
+<br />Et si toutefois le calcul est trop long vous pouvez toujours cliquer sur "Arrêter le script".
+<br /><br />Indiquez dans le champ ci-dessous un chiffre (entier) à décomposer en facteurs premiers, puis, appuyez sur la touche "Entrée" de votre clavier ou cliquez sur "Décomposer".
+</p>
+
+<br>
+<form name="decomposition" action="javascript:affich(textea);" onsubmit = "javascript:process(this);">
+  <input type="radio" name="choice_aff" value="0" onChange="choice_affiche(this.value);" id="defaut_affich"/> Affichage basique
+  <br />
+  <input type="radio" name="choice_aff" value="1" onChange="choice_affiche(this.value);"/> Signe de multiplication "."
+  <br />
+  <input type="radio" name="choice_aff" value="2" onChange="choice_affiche(this.value);"/> Affichage en chaîne mathématique utilisable dans une calculatrice informatique (pour copier-coller)
+  <br /><br />
+  <input type="text" name="fact"/>
+  <br />
+  <input type="submit" value="Décomposer"/>
+</form>
+
+<br /><p align="center"><font color="#000000"><strong><i id="texte_2"></i></strong></font></p>
+
+</body>
+</html>
