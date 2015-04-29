@@ -1,12 +1,7 @@
 package test;
-
-import java.util.ArrayList;
-
 public class Fraction{
-	int numerateur;
-	int denominateur;
-
-
+	private int numerateur, denominateur;
+	double limite;
 
 	public Fraction(int nb1, int nb2) {
 		// TODO Auto-generated constructor stub
@@ -14,7 +9,7 @@ public class Fraction{
 		this.denominateur = nb2;
 	}
 
-	public int[] addition(Fraction f2){
+	public Fraction addition(Fraction f2){
 		int numRes, denomRes;
 		if(this.getDenominateur() == 0 || f2.getDenominateur() == 0){
 			return null;
@@ -26,20 +21,22 @@ public class Fraction{
 			numRes = (this.getNumerateur()*f2.getDenominateur()) + (f2.getNumerateur()*this.getDenominateur());
 			denomRes = this.getDenominateur()*f2.getDenominateur();
 		}
-		return new int[]{numRes,denomRes};
+		return new Fraction(numRes, denomRes);
 	}
 
-	public static void simplification(int[] tab){
-		
-		while(pgcd(tab[0], tab[1]) != 1){
+	public static void simplification(Fraction f){
+
+		while(pgcd(f.getNumerateur(), f.getDenominateur()) > 1){
 			for(int i=1; i<=9; i++){
-				if(tab[0] % i == 0 && tab[1] % i == 0){
-					tab[0] = tab[0]/i;
-					tab[1] = tab[1]/i;
+				if(f.getNumerateur() % i == 0 && f.getDenominateur() % i == 0){
+					f.setNumerateur(f.getNumerateur()/i);
+					f.setDenominateur(f.getDenominateur()/i);
 				}
 			}
 		}
+		
 	}
+	
 
 	public static int pgcd(int a, int b){
 		int r =a;
@@ -51,22 +48,21 @@ public class Fraction{
 		return  (a*b)/pgcd(a, b);
 	}
 
-	public static int[] facteurPrems(int a){
-		ArrayList<Integer> l = new ArrayList<Integer>();
+	public static String facteurPrems(int a){
+		String texte ="";
 		int i =2;
-		while(a != 1){
+		while(a > 1){
 			if(a % i ==0){
-				l.add(i);
+				texte = texte + i + " x ";
+			
 				a = a / i;
 			}else{
 				i++;
 			}
 		}
-		int[] tab = new int[l.size()];
-		for (int j = 0; j < tab.length; j++) {
-			tab[j] = l.get(j);
-		}
-		return tab;
+		if(texte.length() >3)
+		texte = texte.substring(0,texte.length()-3);
+		return texte;
 	}
 
 	public int getNumerateur() {
@@ -85,19 +81,18 @@ public class Fraction{
 	}
 
 	public static void main(String[] args) {
-		Fraction f1 = new Fraction(9, 4);
-		Fraction f2 = new Fraction(8, 9);
+		Fraction f1 = new Fraction(3, 4);
+		Fraction f2 = new Fraction(5, 6);
 
 		System.out.println(Fraction.ppcm(4, 12));
 		System.out.println(Fraction.ppcm(10, 12));
-		int[] t = facteurPrems(5);
-		for (int i = 0; i < t.length; i++) {
-			System.out.print(t[i] + "  |");
-		}
-		int[] tab = f1.addition(f2);
-		System.out.println(tab[0] + "  " + tab[1]);
-		f1.simplification(tab); 
-		System.out.println(tab[0] + "  " + tab[1]);
+
+		System.out.println();
+		Fraction addition = f1.addition(f2);
+		System.out.println(addition.getNumerateur() + "  " + addition.getDenominateur());
+		Fraction.simplification(addition); 
+		System.out.println(addition.getNumerateur() + "  " + addition.getDenominateur());
+		System.out.println(Fraction.facteurPrems(2));
 	}
 
 }

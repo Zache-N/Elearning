@@ -13,7 +13,7 @@
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="dist/js/jquery.min.js"></script>
-<!-- Include all compiled plugins (below), or include individual files as needed -->
+<!-- Include all compiled plugins (below), or include individual 	files as needed -->
 <script src="dist/js/jquery.min.js"></script>
 
 <script src="dist/js/bootstrap.min.js"></script>
@@ -25,13 +25,33 @@
 		<div class="row">
 			<div class="col-md-8">
 				<div class="panel panel-default">
-					<%!int numerateur1 = (int) (Math.random() * 10);
-					int denominateur1 = (int) (Math.random() * 10 + 1);
-					int numerateur2 = (int) (Math.random() * 10);
-					int denominateur2 = (int) (Math.random() * 10 + 1);
+					<%!int numerateur1 = 3;//(int) (Math.random() * 10);
+					int denominateur1 = 4;//(int) (Math.random() * 10 + 1);
+					int numerateur2 = 5;//(int) (Math.random() * 10);
+					int denominateur2 = 6;//(int) (Math.random() * 10 + 1);
 					int[] result = new int[2];
 					Fraction f1 = new Fraction(numerateur1, denominateur1);
 					Fraction f2 = new Fraction(numerateur2, denominateur2);%>
+
+					<%
+						String rmcm = request.getParameter("mcm");
+						String rmcm1 = request.getParameter("mcm1");
+						String rmcm2 = request.getParameter("mcm2");
+
+						if (rmcm == null)
+							rmcm = "0";
+						if (rmcm1 == null)
+							rmcm1 = "0";
+						if (rmcm2 == null)
+							rmcm2 = "0";
+
+						int mcm = Integer.parseInt(rmcm);
+						//int mcm1 = Integer.parseInt(rmcm1);
+						//int mcm2 = Integer.parseInt(rmcm2);
+						Fraction resultat = new Fraction(numerateur1 + numerateur2,
+								denominateur1);
+					%>
+
 					<div class="panel-heading">Pagina de ejercicio</div>
 					<div class="panel-body">
 						<div class="col-xs-2">
@@ -59,42 +79,21 @@
 							<h2 class="text-center">=</h2>
 							</br>
 						</div>
+
+						<div id="suite" class="col-xs-2"></div>
+
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="container">
 			<div class="row">
-				<%
-					String requete1 = request.getParameter("denom1");
-					String requete2 = request.getParameter("denom2");
-					String requete3 = request.getParameter("num1");
-					String requete4 = request.getParameter("num2");
-
-					if (requete1 == null)
-						requete1 = "1";
-					if (requete2 == null)
-						requete2 = "1";
-					if (requete3 == null)
-						requete3 = "0";
-					if (requete4 == null)
-						requete4 = "0";
-
-					int denom1 = Integer.parseInt(requete1);
-					int denom2 = Integer.parseInt(requete2);
-					int num1 = Integer.parseInt(requete3);
-					int num2 = Integer.parseInt(requete4);
-					int resultat[] = new int[2];
-					int simplification[] = new int[2];
-					Fraction f1 = new Fraction(num1, denom1);
-					Fraction f2 = new Fraction(num2, denom2);
-				%>
 				<!-- Button trigger modal qui est ici un input -->
 				<!-- Button trigger modal -->
 				<button type="button" class="btn btn-primary btn-lg"
 					data-toggle="modal" data-target="#myModal">Comenzar</button>
 				<!-- Modal -->
-					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 					aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
 						<div class="modal-content">
@@ -103,126 +102,119 @@
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">Test</h4>
+								<h4 class="modal-title" id="myModalLabel">MCD</h4>
 							</div>
-							<div class="modal-body">
-								<div class="container-fluid">
+							<form method="GET">
+								<div class="modal-body">
+									<div class="container-fluid">
 
-									<div class="col-xs-2">
-										<h3 class="text-center"><%=num1%></h3>
-										<hr style="width: 100%; color: black" />
-										<h3 class="text-center"><%=denom1%></h3>
-									</div>
+										<%
+											if (denominateur1 == denominateur2) {
+												//if (denom1 == denom2) {
 
-									<div class="col-xs-1">
-										</br>
-										<h2 class="text-center">+</h2>
-										</br>
-									</div>
+												out.println("<div class=\"col-xs-3 \">"
+														+ "<h2>"
+														+ numerateur1
+														+ " + "
+														+ numerateur2
+														+ " = </h2>"
+														+ "</div><div class=\"col-xs-5 \"></br><div id=\"mcmDiv\" class=\"form-group\"><input type=\"number\" class=\"form-control\" name=\"mcm\" id=\"mcm\""
+														+ "placeholder=\"resultado\"></div>" + "</div>");
 
-									<div class="col-xs-2">
-										<h3 class="text-center"><%=num2%></h3>
-										<hr style="width: 100%; color: black" />
-										<h3 class="text-center"><%=denom2%></h3>
-									</div>
+												if (mcm == resultat.getNumerateur()) {
+													out.println("<script type=\"text/javascript\">" +
 
-									<div class="col-xs-1">
-										</br>
-										<h2 class="text-center">=</h2>
-										</br>
-									</div>
+													" $('#mcm').val(\"" + mcm + "\");"
+															+ " $('#mcmDiv').addClass('has-success');"
+															+ "$('#savemcm').show();" +
 
-									<%
-										if (denom1 == denom2) {
-											Fraction simple = new Fraction(num1 + num2, denom1);
-											out.println("<div class=\"col-xs-2\">"
-													+ "<h3 class=\"text-center\">" + simple.getNumerateur()
-													+ "</h3>" + "<hr style=\"width: 100%;\" />"
-													+ "<h3 class=\"text-center\">"
-													+ simple.getDenominateur() + "</h3>" + "</div>" +
+															"</script>");
 
-													"<div class=\"col-xs-1\">" + "</br>"
-													+ "<h2 class=\"text-center\">=</h2>" + "</br>"
-													+ "</div>");
-											
-											simplification = new int[]{simple.getNumerateur(),simple.getDenominateur()};
-											//Fraction.simplification(simplification);
-											if(simple.getNumerateur() != simplification[0] && simple.getDenominateur() != simplification[1]){
-												out.println("<div class=\"col-xs-2\">"
-														+ "<h3 class=\"text-center\">" + simplification[0]
-														+ "</h3>" + "<hr style=\"width: 100%;\" />"
-														+ "<h3 class=\"text-center\">"
-														+ simplification[1] + "</h3>" + "</div>");
-											}
-											
-										} else {
-											int ppcm = Fraction.ppcm(denom1, denom2);
-											Fraction f3 = new Fraction(num1 * (ppcm / denom1), ppcm);
-											Fraction f4 = new Fraction(num2 * (ppcm / denom2), ppcm);
-											out.println("<div class=\"col-xs-2\">"
-													+ "<h3 class=\"text-center\">" + f3.getNumerateur()
-													+ "</h3>" + "<hr style=\"width: 100%;\" />"
-													+ "<h3 class=\"text-center\">" + f3.getDenominateur()
-													+ "</h3>" + "</div>" +
+												} else if (mcm == 0) {
 
-													"<div class=\"col-xs-1\">" + "</br>"
-													+ "<h2 class=\"text-center\">+</h2>" + "</br>"
-													+ "</div>" +
+												} else {
+													out.println("<script type=\"text/javascript\">" +
 
-													"<div class=\"col-xs-2\">"
-													+ "<h3 class=\"text-center\">" + f4.getNumerateur()
-													+ "</h3>" + "<hr style=\"width: 100%;\" />"
-													+ "<h3 class=\"text-center\">" + f4.getDenominateur()
-													+ "</h3>" + "</div>");
+													" $('#mcm').val(\"" + mcm + "\");"
+															+ " $('#mcmDiv').addClass('has-error');" +
 
-											resultat = f3.addition(f4);
-											simplification = new int[]{resultat[0], resultat[1]};
-											//Fraction.simplification(simplification);
-											if (resultat[0] == simplification[0]
-													&& resultat[1] == simplification[1]) {
-												out.println("<div class=\"col-xs-1\">" + "</br>"
-														+ "<h2 class=\"text-center\">=</h2>" + "</br>"
-														+ "</div>" +
+															"</script>");
+												}
 
-														"<div class=\"col-xs-2\">"
-														+ "<h3 class=\"text-center\">" + resultat[0]
-														+ "</h3>" + "<hr style=\"width: 100%;\" />"
-														+ "<h3 class=\"text-center\">" + resultat[1]
-														+ "</h3>" + "</div>");
 											} else {
-												out.println("<div class=\"col-xs-1\">" + "</br>"
-														+ "<h2 class=\"text-center\">=</h2>" + "</br>"
-														+ "</div>" +
 
-														"<div class=\"col-xs-2\">"
-														+ "<h3 class=\"text-center\">" + resultat[0]
-														+ "</h3>" + "<hr style=\"width: 100%;\" />"
-														+ "<h3 class=\"text-center\">" + resultat[1]
-														+ "</h3>" + "</div>" +
+												out.println("<div class=\"row\"><div class=\"col-xs-2 \">"
+														+ "<h2>"
+														+ denominateur1
+													
+														+ " = </h2>"
+														+ "</div><div class=\"col-xs-5 \"></br><div id=\"mcmDiv1\" class=\"form-group\"><input type=\"text\" class=\"form-control\" name=\"mcm1\" id=\"mcm1\""
+														+ "placeholder=\"resultado\"></div>" + "</div></div>");
+												out.println("<div class=\"row\"><div class=\"col-xs-2 \">"
+														+ "<h2>"
+														+ denominateur2
+													
+														+ " = </h2>"
+														+ "</div><div class=\"col-xs-5 \"></br><div id=\"mcmDiv2\" class=\"form-group\"><input type=\"text\" class=\"form-control\" name=\"mcm2\" id=\"mcm2\""
+														+ "placeholder=\"resultado\"></div>" + "</div></div>");
+												out.println("<div class=\"row\"><div class=\"col-xs-3 \">"
+														+ "<h2>"
+														+ "mcm"
+														+ " = </h2>"
+														+ "</div><div class=\"col-xs-5 \"></br><input type=\"text\" class=\"form-control\" name=\"mcm2\" id=\"mcm2\""
+														+ "placeholder=\"MCM\">" + "</div></div>");
+												
+												if (rmcm1.equals(Fraction.facteurPrems(denominateur1))) {
+													out.println("<script type=\"text/javascript\">" +
 
-														"<div class=\"col-xs-1\">" + "</br>"
-														+ "<h2 class=\"text-center\">=</h2>" + "</br>"
-														+ "</div>" +
+													" $('#mcm1').val(\"" + rmcm1+ "\");"
+															+ " $('#mcmDiv1').addClass('has-success');"+
 
-														"<div class=\"col-xs-2\">"
-														+ "<h3 class=\"text-center\">" + simplification[0]
-														+ "</h3>" + "<hr style=\"width: 100%;\" />"
-														+ "<h3 class=\"text-center\">" + simplification[1]
-														+ "</h3>" + "</div>");
+															"</script>");
 
+												} else if (rmcm1 == "0") {
+
+												} else {
+													out.println("<script type=\"text/javascript\">" +
+
+													" $('#mcm1').val(\"" + rmcm1 + "\");"
+															+ " $('#mcmDiv1').addClass('has-error');" +
+
+															"</script>");
+												}
+												
+												if (rmcm2.equals(Fraction.facteurPrems(denominateur2))) {
+													out.println("<script type=\"text/javascript\">" +
+
+													" $('#mcm2').val(\"" + rmcm2+ "\");"
+															+ " $('#mcmDiv2').addClass('has-success');"+
+
+															"</script>");
+
+												} else if (denominateur2 == 0) {
+
+												} else {
+													out.println("<script type=\"text/javascript\">" +
+
+													" $('#mcm2').val(\"" + rmcm2 + "\");"
+															+ " $('#mcmDiv2').addClass('has-error');" +
+
+															"</script>");
+												}
 											}
+										%>
 
-										}
-									%>
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default"
+										data-dismiss="modal">Close</button>
+									<input type="submit" class="btn btn-success" value="Valider">
+									<button type="button" class="btn btn-primary" id="savemcm"
+										onclick="addSimple()">Save changes</button>
 
 								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save
-									changes</button>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -230,4 +222,10 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">function addSimple() {
+	<%int str = resultat.getNumerateur(), str2 = resultat.getDenominateur();%>
+	var html ="<div class=\"col-xs-2\"><h2 class=\"text-center\">" + <%=str%> + "</h2><hr style=\"width: 100%;\" /><h2 class=\"text-center\">" + <%=str2%> +"</h2></div>";
+		$("#suite").html(html);
+	}
+</script>
 </html>

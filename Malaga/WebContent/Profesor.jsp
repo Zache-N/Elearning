@@ -1,6 +1,7 @@
 <%@page import="test.Fraction"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@page import="org.json.simple.JSONObject"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,14 +26,14 @@
 			<div class="col-md-8">
 				<div class="panel panel-default">
 					<div class="panel-heading">Pagina de ejercicio</div>
-					<form action="Profesor.jsp" method="GET">
+					<form method="GET">
 						<div class="panel-body">
 							<div class="col-xs-2">
 								<input type="number" class="form-control" name="num1" id="num1"
 									placeholder="numerador">
 								<hr style="width: 100%;" />
 								<input type="number" class="form-control" name="denom1"
-									id="denom1" placeholder="denominador"
+									id="denom1" placeholder="denominador" min="1"
 									onkeyup="if($('#dIgual').is(':checked')=== true) document.getElementById('denom2').value = this.value;">
 							</div>
 
@@ -48,8 +49,8 @@
 								<input type="number" class="form-control" name="num2" id="num2"
 									placeholder="numerador">
 								<hr style="width: 100%;" />
-								<input type="number" class="form-control" name="denom2"
-									id="denom2" placeholder="denominador"
+								<input type="number" class="form-control" name="denom2" min="1"
+									max="" id="denom2" placeholder="denominador"
 									onkeyup="if($('#dIgual').is(':checked')=== true) document.getElementById('denom1').value = this.value;">
 							</div>
 							<input type="submit" class="btn btn-success" value="Valider">
@@ -102,10 +103,8 @@
 					int denom2 = Integer.parseInt(requete2);
 					int num1 = Integer.parseInt(requete3);
 					int num2 = Integer.parseInt(requete4);
-					int resultat[] = new int[2];
-					int simplification[] = new int[2];
-					Fraction f1 = new Fraction(num1, denom1);
-					Fraction f2 = new Fraction(num2, denom2);
+					Fraction res;
+					Fraction simplification;
 				%>
 				<!-- Button trigger modal qui est ici un input -->
 				<!-- Button trigger modal -->
@@ -121,117 +120,145 @@
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">Test</h4>
+								<h4 class="modal-title" id="myModalLabel">Resolución de la adición</h4>
 							</div>
 							<div class="modal-body">
 								<div class="container-fluid">
+									<div class="row">
 
-									<div class="col-xs-2">
-										<h3 class="text-center"><%=num1%></h3>
-										<hr style="width: 100%; color: black" />
-										<h3 class="text-center"><%=denom1%></h3>
-									</div>
+										<div class="col-xs-2">
+											<h3 class="text-center"><%=num1%></h3>
+											<hr style="width: 100%; color: black" />
+											<h3 class="text-center"><%=denom1%></h3>
+										</div>
 
-									<div class="col-xs-1">
-										</br>
-										<h2 class="text-center">+</h2>
-										</br>
-									</div>
+										<div class="col-xs-1">
+											</br>
+											<h2 class="text-center">+</h2>
+											</br>
+										</div>
 
-									<div class="col-xs-2">
-										<h3 class="text-center"><%=num2%></h3>
-										<hr style="width: 100%; color: black" />
-										<h3 class="text-center"><%=denom2%></h3>
-									</div>
+										<div class="col-xs-2">
+											<h3 class="text-center"><%=num2%></h3>
+											<hr style="width: 100%; color: black" />
+											<h3 class="text-center"><%=denom2%></h3>
+										</div>
 
-									<div class="col-xs-1">
-										</br>
-										<h2 class="text-center">=</h2>
-										</br>
-									</div>
+										<div class="col-xs-1">
+											</br>
+											<h2 class="text-center">=</h2>
+											</br>
+										</div>
 
-									<%
-										if (denom1 == denom2) {
-											Fraction simple = new Fraction(num1 + num2, denom1);
-											out.println("<div class=\"col-xs-2\">"
-													+ "<h3 class=\"text-center\">" + simple.getNumerateur()
-													+ "</h3>" + "<hr style=\"width: 100%;\" />"
-													+ "<h3 class=\"text-center\">"
-													+ simple.getDenominateur() + "</h3>" + "</div>" +
-
-													"<div class=\"col-xs-1\">" + "</br>"
-													+ "<h2 class=\"text-center\">=</h2>" + "</br>"
-													+ "</div>");
-											
-											simplification = new int[]{simple.getNumerateur(),simple.getDenominateur()};
-											Fraction.simplification(simplification);
-											if(simple.getNumerateur() != simplification[0] && simple.getDenominateur() != simplification[1]){
-												out.println("<div class=\"col-xs-2\">"
-														+ "<h3 class=\"text-center\">" + simplification[0]
+										<%
+											if (denom1 == denom2) {
+												Fraction simple = new Fraction(num1 + num2, denom1);
+												out.println("<div class=\"col-xs-3\">"
+														+ "<h3 class=\"text-center\">" + simple.getNumerateur()
 														+ "</h3>" + "<hr style=\"width: 100%;\" />"
 														+ "<h3 class=\"text-center\">"
-														+ simplification[1] + "</h3>" + "</div>");
-											}
-											
-										} else {
-											int ppcm = Fraction.ppcm(denom1, denom2);
-											Fraction f3 = new Fraction(num1 * (ppcm / denom1), ppcm);
-											Fraction f4 = new Fraction(num2 * (ppcm / denom2), ppcm);
-											out.println("<div class=\"col-xs-2\">"
-													+ "<h3 class=\"text-center\">" + f3.getNumerateur()
-													+ "</h3>" + "<hr style=\"width: 100%;\" />"
-													+ "<h3 class=\"text-center\">" + f3.getDenominateur()
-													+ "</h3>" + "</div>" +
-
-													"<div class=\"col-xs-1\">" + "</br>"
-													+ "<h2 class=\"text-center\">+</h2>" + "</br>"
-													+ "</div>" +
-
-													"<div class=\"col-xs-2\">"
-													+ "<h3 class=\"text-center\">" + f4.getNumerateur()
-													+ "</h3>" + "<hr style=\"width: 100%;\" />"
-													+ "<h3 class=\"text-center\">" + f4.getDenominateur()
-													+ "</h3>" + "</div>");
-
-											resultat = f3.addition(f4);
-											simplification = new int[]{resultat[0], resultat[1]};
-											Fraction.simplification(simplification);
-											if (resultat[0] == simplification[0]
-													&& resultat[1] == simplification[1]) {
-												out.println("<div class=\"col-xs-1\">" + "</br>"
-														+ "<h2 class=\"text-center\">=</h2>" + "</br>"
-														+ "</div>" +
-
-														"<div class=\"col-xs-2\">"
-														+ "<h3 class=\"text-center\">" + resultat[0]
-														+ "</h3>" + "<hr style=\"width: 100%;\" />"
-														+ "<h3 class=\"text-center\">" + resultat[1]
-														+ "</h3>" + "</div>");
-											} else {
-												out.println("<div class=\"col-xs-1\">" + "</br>"
-														+ "<h2 class=\"text-center\">=</h2>" + "</br>"
-														+ "</div>" +
-
-														"<div class=\"col-xs-2\">"
-														+ "<h3 class=\"text-center\">" + resultat[0]
-														+ "</h3>" + "<hr style=\"width: 100%;\" />"
-														+ "<h3 class=\"text-center\">" + resultat[1]
-														+ "</h3>" + "</div>" +
+														+ simple.getDenominateur() + "</h3>" + "</div>" +
 
 														"<div class=\"col-xs-1\">" + "</br>"
 														+ "<h2 class=\"text-center\">=</h2>" + "</br>"
+														+ "</div>");
+												simplification = new Fraction(simple.getNumerateur(),
+														simple.getDenominateur());
+												Fraction.simplification(simplification);
+												if (simple.getNumerateur() != simplification.getNumerateur()
+														&& simple.getDenominateur() != simplification
+																.getDenominateur()) {
+													out.println("<div class=\"col-xs-2\">"
+															+ "<h3 class=\"text-center\">"
+															+ simplification.getNumerateur() + "</h3>"
+															+ "<hr style=\"width: 100%;\" />"
+															+ "<h3 class=\"text-center\">"
+															+ simplification.getDenominateur() + "</h3>"
+															+ "</div>");
+												}
+
+											} else {
+												int ppcm = Fraction.ppcm(denom1, denom2);
+												Fraction f3 = new Fraction(num1 * (ppcm / denom1), ppcm);
+												Fraction f4 = new Fraction(num2 * (ppcm / denom2), ppcm);
+												out.println("<div class=\"col-xs-2\">"
+														+ "<h3 class=\"text-center\">" + f3.getNumerateur()
+														+ "</h3>" + "<hr style=\"width: 100%;\" />"
+														+ "<h3 class=\"text-center\">" + f3.getDenominateur()
+														+ "</h3>" + "</div>" +
+
+														"<div class=\"col-xs-1\">" + "</br>"
+														+ "<h2 class=\"text-center\">+</h2>" + "</br>"
 														+ "</div>" +
 
 														"<div class=\"col-xs-2\">"
-														+ "<h3 class=\"text-center\">" + simplification[0]
+														+ "<h3 class=\"text-center\">" + f4.getNumerateur()
 														+ "</h3>" + "<hr style=\"width: 100%;\" />"
-														+ "<h3 class=\"text-center\">" + simplification[1]
+														+ "<h3 class=\"text-center\">" + f4.getDenominateur()
 														+ "</h3>" + "</div>");
 
-											}
+												res = f3.addition(f4);
+												simplification = new Fraction(res.getNumerateur(),
+														res.getDenominateur());
+												Fraction.simplification(simplification);
+												if (res.getNumerateur() == simplification.getNumerateur()
+														&& res.getDenominateur() == simplification
+																.getDenominateur()) {
+													out.println("<div class=\"col-xs-1\">" + "</br>"
+															+ "<h2 class=\"text-center\">=</h2>" + "</br>"
+															+ "</div>" +
 
-										}
-									%>
+															"<div class=\"col-xs-2\">"
+															+ "<h3 class=\"text-center\">"
+															+ res.getNumerateur() + "</h3>"
+															+ "<hr style=\"width: 100%;\" />"
+															+ "<h3 class=\"text-center\">"
+															+ res.getDenominateur() + "</h3>" + "</div>");
+												} else {
+													out.println("<div class=\"col-xs-1\">" + "</br>"
+															+ "<h2 class=\"text-center\">=</h2>" + "</br>"
+															+ "</div>" +
+
+															"<div class=\"col-xs-2\">"
+															+ "<h3 class=\"text-center\">"
+															+ res.getNumerateur() + "</h3>"
+															+ "<hr style=\"width: 100%;\" />"
+															+ "<h3 class=\"text-center\">"
+															+ res.getDenominateur() + "</h3>" + "</div>" +
+
+															"<div class=\"col-xs-1\">" + "</br>"
+															+ "<h2 class=\"text-center\">=</h2>" + "</br>"
+															+ "</div>" +
+
+															"<div class=\"col-xs-2\">"
+															+ "<h3 class=\"text-center\">"
+															+ simplification.getNumerateur() + "</h3>"
+															+ "<hr style=\"width: 100%;\" />"
+															+ "<h3 class=\"text-center\">"
+															+ simplification.getDenominateur() + "</h3>"
+															+ "</div>");
+
+												}
+
+											}
+										%>
+									
+									</div>
+									<div class="row">
+										<div class="container">
+											<h2>
+												<%=denom1%> = <%=Fraction.facteurPrems(denom1)%>
+											</h2>
+										</div>
+									</div>
+									
+									<div class="row">
+										<div class="container">
+											<h2>
+												<%=denom2%> = <%=Fraction.facteurPrems(denom2)%>
+											</h2>
+										</div>
+									</div>
 
 								</div>
 							</div>
