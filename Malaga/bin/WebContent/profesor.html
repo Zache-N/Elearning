@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Creacion de un ejercicio</title>
+<!-- Bootstrap -->
+<link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="dist/js/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="dist/js/jquery.min.js"></script>
+<script src="dist/js/bootstrap.js"></script>
+<script src="dist/js/bootstrap.min.js"></script>
+<script src="js/calcul.js"></script>
+</head>
+<body>
+	<h1 class="text-center">Ejercicio</h1>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading">Pagina de ejercicio</div>
+					<div class="panel-body">
+						<div class="col-xs-2">
+							<input type="number" class="form-control" id="num1"
+								placeholder="numerador">
+							<hr style="width: 100%;" />
+							<input type="number" class="form-control" id="denom1"
+								placeholder="denominador"
+								onkeyup="if($('#dIgual').is(':checked')=== true) document.getElementById('denom2').value = this.value;">
+						</div>
+
+						<div class="col-xs-2">
+							</br>
+							<h3 class="text-center">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+							</h3>
+							</br>
+						</div>
+
+						<div class="col-xs-2">
+							<input type="number" class="form-control" id="num2"
+								placeholder="numerador">
+							<hr style="width: 100%;" />
+							<input type="number" class="form-control" id="denom2"
+								placeholder="denominador"
+								onkeyup="if($('#dIgual').is(':checked')=== true) document.getElementById('denom1').value = this.value;">
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">Optiones</div>
+					<div class="panel-body">
+						<div class="checkbox">
+							<label> <input type="checkbox" value="" id="dIgual">Denominador
+								igual
+							</label>
+						</div>
+
+						Nombre de : <label class="radio-inline"> <input
+							type="radio" name="inlineRadioOptions" id="inlineRadio1"
+							value="option1"> 1
+						</label> <label class="radio-inline"> <input type="radio"
+							name="inlineRadioOptions" id="inlineRadio2" value="option2">
+							2
+						</label> <label class="radio-inline"> <input type="radio"
+							name="inlineRadioOptions" id="inlineRadio3" value="option3">
+							3
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
