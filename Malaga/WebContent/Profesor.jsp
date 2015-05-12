@@ -1,7 +1,7 @@
 <%@page import="test.Fraction"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@page import="org.json.simple.JSONObject"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -120,7 +120,8 @@
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">Resolución de la adición</h4>
+								<h4 class="modal-title" id="myModalLabel">Resolución de la
+									adición</h4>
 							</div>
 							<div class="modal-body">
 								<div class="container-fluid">
@@ -151,6 +152,11 @@
 										</div>
 
 										<%
+										
+										out.println("<script type=\"text/javascript\">" +
+													" $('#num1').val(\"" + num1 + "\");"  + " $('#num2').val(\"" + num2 + "\");"  + " $('#denom1').val(\"" + denom1 + "\");"
+															 + " $('#denom2').val(\"" + denom2 + "\");" +
+															"</script>");
 											if (denom1 == denom2) {
 												Fraction simple = new Fraction(num1 + num2, denom1);
 												out.println("<div class=\"col-xs-3\">"
@@ -242,20 +248,24 @@
 
 											}
 										%>
-									
+
 									</div>
 									<div class="row">
 										<div class="container">
 											<h2>
-												<%=denom1%> = <%=Fraction.facteurPrems(denom1)%>
+												<%=denom1%>
+												=
+												<%=Fraction.facteurPrems(denom1)%>
 											</h2>
 										</div>
 									</div>
-									
+
 									<div class="row">
 										<div class="container">
 											<h2>
-												<%=denom2%> = <%=Fraction.facteurPrems(denom2)%>
+												<%=denom2%>
+												=
+												<%=Fraction.facteurPrems(denom2)%>
 											</h2>
 										</div>
 									</div>
@@ -265,8 +275,8 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default"
 									data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save
-									changes</button>
+								<button type="button" onclick="validate()"
+									class="btn btn-primary">Save changes</button>
 							</div>
 						</div>
 					</div>

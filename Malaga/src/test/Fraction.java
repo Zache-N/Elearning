@@ -1,7 +1,11 @@
 package test;
+
+//import org.json.*;
 public class Fraction{
 	private int numerateur, denominateur;
 	double limite;
+	String str = "{ \"name\": \"Alice\", \"age\": 20 }";
+	//JSONObject obj = new JSONObject(str);
 
 	public Fraction(int nb1, int nb2) {
 		// TODO Auto-generated constructor stub

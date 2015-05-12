@@ -13,6 +13,17 @@ function simplification() {
 	$("#simplification").html(html);
 }
 
+function validate() {
+	var jsonObj = {
+		    "num1": $('#num1').val(),
+		    "num2": $('#num2').val(),
+		    "denom1": $('#denom1').val(),
+		    "denom2": $('#denom2').val(),
+		};
+	document.cookie = JSON.stringify(jsonObj);
+	window.location.href = "Alumno.jsp" ;
+}
+
 
 
 

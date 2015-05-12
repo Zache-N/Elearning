@@ -1,5 +1,6 @@
 <%@page import="test.Fraction"%>
 <%@page import="java.lang.Math"%>
+<%@page import="org.json.JSONObject"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -31,9 +32,21 @@
 					int denominateur2 = 6;//(int) (Math.random() * 10 + 1);
 					int[] result = new int[2];
 					Fraction f1 = new Fraction(numerateur1, denominateur1);
-					Fraction f2 = new Fraction(numerateur2, denominateur2);%>
+					Fraction f2 = new Fraction(numerateur2, denominateur2);
+					//JSONObject obj = new ;
+				%>
 
-					<%
+
+					<%/*String jsonString = request.getParameter("jsonData");
+				if(jsonString != null) {
+					    try {
+					    }
+					    catch(JSONException e) {
+
+					    }
+					  }
+					out.println(jsonString);*/
+					
 						String rmcm = request.getParameter("mcm");
 						String rmcm1 = request.getParameter("mcm1");
 						String rmcm2 = request.getParameter("mcm2");
@@ -50,6 +63,7 @@
 						//int mcm2 = Integer.parseInt(rmcm2);
 						Fraction resultat = new Fraction(numerateur1 + numerateur2,
 								denominateur1);
+						
 					%>
 
 					<div class="panel-heading">Pagina de ejercicio</div>
@@ -206,6 +220,7 @@
 
 									</div>
 								</div>
+
 								<div class="modal-footer">
 									<button type="button" class="btn btn-default"
 										data-dismiss="modal">Close</button>
@@ -213,8 +228,16 @@
 									<button type="button" class="btn btn-primary" id="savemcm"
 										onclick="addSimple()">Save changes</button>
 
+
 								</div>
 							</form>
+							<form name="my_form" id="my_ford_id">
+								<input type="hidden" id="jsonData" name="jsonData" value="" />
+							</form>
+
+							<script> document.getElementById('jsonData').value = document.cookie
+									</script>
+							<!-- document.forms['my_form'].submit(); -->
 						</div>
 					</div>
 				</div>
