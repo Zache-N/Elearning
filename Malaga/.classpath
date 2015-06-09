@@ -23,5 +23,7 @@
 	<classpathentry kind="lib" path="C:/Users/zach/Desktop/httpcomponents-client-4.4.1/lib/httpmime-4.4.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/zach/Desktop/httpcomponents-client-4.4.1/lib/jna-4.1.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/zach/Desktop/httpcomponents-client-4.4.1/lib/jna-platform-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/zach/Downloads/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/zach/Desktop/wolfram-alpha-java-binding-master/WolframAlpha-1.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

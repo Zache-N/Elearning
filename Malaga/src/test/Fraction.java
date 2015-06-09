@@ -1,16 +1,18 @@
 package test;
 
-//import org.json.*;
+import java.util.Scanner;
+
+
 public class Fraction{
 	private int numerateur, denominateur;
 	double limite;
-	String str = "{ \"name\": \"Alice\", \"age\": 20 }";
-	//JSONObject obj = new JSONObject(str);
 
 	public Fraction(int nb1, int nb2) {
 		// TODO Auto-generated constructor stub
 		this.numerateur =nb1;
 		this.denominateur = nb2;
+
+
 	}
 
 	public Fraction addition(Fraction f2){
@@ -38,9 +40,9 @@ public class Fraction{
 				}
 			}
 		}
-		
+
 	}
-	
+
 
 	public static int pgcd(int a, int b){
 		int r =a;
@@ -58,14 +60,14 @@ public class Fraction{
 		while(a > 1){
 			if(a % i ==0){
 				texte = texte + i + " x ";
-			
+
 				a = a / i;
 			}else{
 				i++;
 			}
 		}
 		if(texte.length() >3)
-		texte = texte.substring(0,texte.length()-3);
+			texte = texte.substring(0,texte.length()-3);
 		return texte;
 	}
 
@@ -84,7 +86,7 @@ public class Fraction{
 		this.denominateur = denominateur;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		Fraction f1 = new Fraction(3, 4);
 		Fraction f2 = new Fraction(5, 6);
 
@@ -97,6 +99,19 @@ public class Fraction{
 		Fraction.simplification(addition); 
 		System.out.println(addition.getNumerateur() + "  " + addition.getDenominateur());
 		System.out.println(Fraction.facteurPrems(2));
+		Wolframe f = new Wolframe("Fractor " +"4");
+		String saisie  ="";
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Veuillez saisir un mot :");
+		saisie = sc.nextLine();
+		System.out.println(f.recupFacteur()+"");
+
+		if (new Wolframe(saisie +"=" + f.recupFacteur()).resultIsTrue().equalsIgnoreCase("true") ) {
+			System.out.println("COUCOU");
+		}else{
+			System.out.println("PAS BON");
+		}
 	}
+
 
 }
